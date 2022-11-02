@@ -106,7 +106,7 @@ function getCordsFromSearch(value) {
     const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`;
     console.log(value);
     const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${apiKey}`;
-
+                            
     const prm = fetch(geolocationAPi)
         .then((res) => res.json())
         .then((res) => {

@@ -4,6 +4,7 @@ export const locService = {
     getLocs,
     addLoc,
 };
+const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`;
 
 const STORAGE_KEY = 'locsDB';
 
@@ -35,6 +36,19 @@ function getLocs() {
     });
 }
 
-function addLoc(lat, lng) {
-    console.log(lat, lng);
+function addLoc({ lat, lng }) {
+    const revGeolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+    const locPrm = fetch(revGeolocationAPi)
+        .then((res) => res.json())
+        .then((res) => {
+            // console.log(res);
+            const name = res.results[1].formatted_address;
+            console.log(name);
+            const newId = locs.length + 1;
+            const loc = { id: newId, name, lat, lng, createdAt: Date.now() };
+            locs.unshift(loc);
+            storage.save('locs', locs);
+            return loc;
+        });
+    locPrm.then((res) => console.log(res));
 }

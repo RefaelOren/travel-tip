@@ -15,9 +15,51 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             center: { lat, lng },
             zoom: 15,
         });
+        
+    // Create the initial InfoWindow.
+    let infoWindow = new google.maps.InfoWindow({
+      content: "Click the map to get Lat/Lng!",
+      position: {lat, lng},
+    });
+
+    infoWindow.open(gMap)
+
+
+//     // Configure the click listener.
+    gMap.addListener("click", (mapsMouseEvent) => {
+      // Close the current InfoWindow.
+      infoWindow.close();
+  
+//       // Create a new InfoWindow.
+      infoWindow = new google.maps.InfoWindow({
+        position: mapsMouseEvent.latLng,
+      });
+  
+    //   crating new info window
+    let latlng = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+    infoWindow.setContent(latlng);//stringified
+    latlng = JSON.parse(latlng);
+    mapService.panTo(latlng)//parsed
+     
+      infoWindow.open(gMap);
+    });
+
+
         console.log('Map!', gMap);
+
     });
 }
+
+// remains from google maps api documentation for getting latlng from click
+
+//   declare global {
+//     interface Window {
+//       initMap: () => void;
+//     }
+//   }
+//   window.initMap = initMap;
+//   export {};
+  
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({

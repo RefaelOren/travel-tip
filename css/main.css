@@ -13,12 +13,7 @@ button {
 }
 
 header {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
+    padding: 1.5rem;
     height: fit-content;
 }
 
@@ -33,7 +28,7 @@ h1 {
     gap: 5px;
     /* height: fit-content; */
     width: 92%;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 form {
@@ -73,6 +68,6 @@ form button {
 }
 
 #map {
-    margin: 10px auto;
+    margin: 20px auto;
     border: 2px solid lightgray;
 }

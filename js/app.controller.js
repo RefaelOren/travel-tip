@@ -49,7 +49,7 @@ function onGetUserPos() {
             document.querySelector(
                 '.user-pos'
             ).innerText = posDesc;
-            // mapService.panTo(pos.coords.latitude,pos.coords.longitude)
+            // mapService.panTo(pos.coords.latitude,pos.coords.longityzude)
             mapService.getToNewPos(posDesc,pos.coords.latitude, pos.coords.longitude)
         })
         .catch((err) => {

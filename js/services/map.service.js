@@ -3,6 +3,7 @@ export const mapService = {
     addMarker,
     panTo,
     getCordsFromSearch,
+    getToNewPos,
 };
 
 // Var that is used throughout this Module (not global)
@@ -19,7 +20,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         });
 
         // Create the initial InfoWindow.
-        let infoWindow = new google.maps.InfoWindow({
+        infoWindow = new google.maps.InfoWindow({
             content: 'Click the map to get Lat/Lng!',
             position: { lat, lng },
         });
@@ -30,24 +31,23 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         gMap.addListener('click', (mapsMouseEvent) => {
             // Close the current InfoWindow.
             infoWindow.close();
-            let latlng = JSON.stringify(
+            let strLatlng = JSON.stringify(
                 mapsMouseEvent.latLng.toJSON(),
                 null,
                 2
             );
-            lat = JSON.parse(latlng).lat;
-            lng = JSON.parse(latlng).lng;
+            lat = JSON.parse(strLatlng).lat;
+            lng = JSON.parse(strLatlng).lng;
 
+            getToNewPos(strLatlng, lat, lng);
             //       // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({
-                position: mapsMouseEvent.latLng,
-            });
+            // infoWindow = new google.maps.InfoWindow({
+            //     position: mapsMouseEvent.latLng,
+            // });
 
             //   crating new info window
-            infoWindow.setContent(latlng); //stringified
-            mapService.panTo(latlng); //parsed
-
-            infoWindow.open(gMap);
+            // infoWindow.setContent(strLatlng); //stringified
+            // mapService.panTo(latlng); //parsed
         });
 
         console.log('Map!', gMap);
@@ -66,13 +66,10 @@ function getToNewPos(strLatlng, lat, lng) {
     panTo(lat, lng); //parsed
     const marker = addMarker({ lat, lng });
 
-    //   declare global {
-    //     interface Window {
-    //       initMap: () => void;
-    //     }
-    //   }
-    //   window.initMap = initMap;
-    //   export {};
+    infoWindow.open({
+        anchor: marker,
+        gMap,
+    });
 }
 
 function addMarker(loc) {
@@ -107,12 +104,12 @@ function getCordsFromSearch(value) {
     const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`;
     console.log(value);
     const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${apiKey}`;
-    const { lat, lng } = geolocationAPi;
     const prm = fetch(geolocationAPi)
         .then((res) => res.json())
         .then((res) => {
             console.log(res);
             let { lat, lng } = res.results[0].geometry.location;
             console.log(lat, lng);
+            getToNewPos(value, lat, lng);
         });
 }

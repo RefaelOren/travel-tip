@@ -106,8 +106,12 @@ function _connectGoogleApi() {
 function getCordsFromSearch(value) {
     const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`
     console.log(value);
+<<<<<<< HEAD
     const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${apiKey}`;
     const {lat, lng} = geolocationAPi
+=======
+    const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyASoKCVMWkWV58vT3P8o0q_Qj0iaxco1q4 `;
+>>>>>>> 4bfd4a87bf12d1d9911de18eabdb06498f8d13fc
     const prm = fetch(geolocationAPi)
         .then((res) => res.json())
         .then((res) => {

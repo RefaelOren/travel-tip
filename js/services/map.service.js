@@ -30,6 +30,13 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         gMap.addListener('click', (mapsMouseEvent) => {
             // Close the current InfoWindow.
             infoWindow.close();
+            let latlng = JSON.stringify(
+                mapsMouseEvent.latLng.toJSON(),
+                null,
+                2
+            );
+            lat = JSON.parse(latlng).lat;
+            lng = JSON.parse(latlng).lng;
 
             //       // Create a new InfoWindow.
             infoWindow = new google.maps.InfoWindow({
@@ -37,13 +44,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             });
 
             //   crating new info window
-            let latlng = JSON.stringify(
-                mapsMouseEvent.latLng.toJSON(),
-                null,
-                2
-            );
             infoWindow.setContent(latlng); //stringified
-            latlng = JSON.parse(latlng);
             mapService.panTo(latlng); //parsed
 
             infoWindow.open(gMap);
@@ -103,8 +104,10 @@ function _connectGoogleApi() {
 }
 
 function getCordsFromSearch(value) {
+    const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`
     console.log(value);
-    const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}key=AIzaSyCak0tsf7tLmPKpIXUUzrTNxOdUIpSxa9M`;
+    const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${apiKey}`;
+    const {lat, lng} = geolocationAPi
     const prm = fetch(geolocationAPi)
         .then((res) => res.json())
         .then((res) => {

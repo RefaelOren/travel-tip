@@ -7,12 +7,13 @@ export const mapService = {
     panTo,
     getCordsFromSearch,
     getToNewPos,
+    getLoc,
 };
 
 // Var that is used throughout this Module (not global)
 var gMap;
 var infoWindow;
-var gLoc
+var gLoc={}
 var gMarkers = [];
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
@@ -69,7 +70,8 @@ function getToNewPos(strLatlng, lat, lng) {
         anchor: marker,
         gMap,
     });
-    locService.addLoc(lat, lng)
+    gLoc.lat=lat
+    gLoc.lng=lng
 }
 
 function addMarker(loc) {
@@ -120,4 +122,8 @@ function setMapOnAll(map) {
     for (let i = 0; i < gMarkers.length; i++) {
         gMarkers[i].setMap(map);
     }
+}
+
+function getLoc(){
+    return gLoc
 }

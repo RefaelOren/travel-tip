@@ -42,9 +42,15 @@ form {
 
 form button {
     padding: 0.65rem 0.8rem;
+    cursor: pointer;
 }
 
 .btn-user-pos {
     width: 35%;
     padding: 0.65rem 1rem;
+}
+
+#map {
+    margin: 10px auto;
+    border: 2px solid lightgray;
 }

@@ -7,6 +7,7 @@ window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onSearch = onSearch;
+window.onSaveLocation = onSaveLocation;
 
 function onInit() {
     mapService
@@ -45,12 +46,14 @@ function onGetUserPos() {
     getPosition()
         .then((pos) => {
             console.log('User position is:', pos.coords);
-            let posDesc = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
-            document.querySelector(
-                '.user-pos'
-            ).innerText = posDesc;
+            let posDesc = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
+            document.querySelector('.user-pos').innerText = posDesc;
             // mapService.panTo(pos.coords.latitude,pos.coords.longityzude)
-            mapService.getToNewPos(posDesc,pos.coords.latitude, pos.coords.longitude)
+            mapService.getToNewPos(
+                posDesc,
+                pos.coords.latitude,
+                pos.coords.longitude
+            );
         })
         .catch((err) => {
             console.log('err!!!', err);
@@ -65,4 +68,9 @@ function onSearch(ev) {
     ev.preventDefault();
     let keyword = document.querySelector('.search-input').value;
     mapService.getCordsFromSearch(keyword);
+}
+
+function onSaveLocation() {
+    const cords = getLoc();
+    console.log(cords);
 }

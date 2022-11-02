@@ -20,8 +20,14 @@ button {
 header {
     padding: 1.5rem;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     height: fit-content;
+}
+
+.logo {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .nice-text {

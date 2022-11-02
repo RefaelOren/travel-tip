@@ -68,6 +68,7 @@ function getToNewPos(strLatlng, lat, lng) {
         anchor: marker,
         gMap,
     });
+    locService.addLoc('aa')
 }
 
 function addMarker(loc) {
@@ -107,6 +108,7 @@ function getCordsFromSearch(value) {
     const prm = fetch(geolocationAPi)
         .then ((res) => res.json())
         .then((res) => {
+
             console.log(res);
         });
 }

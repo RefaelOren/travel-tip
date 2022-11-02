@@ -11,6 +11,7 @@ export const mapService = {
 // Var that is used throughout this Module (not global)
 var gMap;
 let infoWindow;
+var gMarkers = [];
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
@@ -22,7 +23,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         });
 
         // Create the initial InfoWindow.
-        infoWindow = new google.maps.InfoWindow({
+         infoWindow = new google.maps.InfoWindow({
             content: 'Click the map to get Lat/Lng!',
             position: { lat, lng },
         });
@@ -42,14 +43,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             lng = JSON.parse(strLatlng).lng;
 
             getToNewPos(strLatlng, lat, lng);
-            //       // Create a new InfoWindow.
-            // infoWindow = new google.maps.InfoWindow({
-            //     position: mapsMouseEvent.latLng,
-            // });
-
-            //   crating new info window
-            // infoWindow.setContent(strLatlng); //stringified
-            // mapService.panTo(latlng); //parsed
+          
         });
 
         console.log('Map!', gMap);
@@ -58,7 +52,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 
 function getToNewPos(strLatlng, lat, lng) {
     infoWindow.close();
-    //       // Create a new InfoWindow.
+
+        setMapOnAll(null)
+
     infoWindow = new google.maps.InfoWindow({
         position: { lat, lng },
     });
@@ -80,6 +76,7 @@ function addMarker(loc) {
         map: gMap,
         title: 'Hello World!',
     });
+    gMarkers.push(marker)
     return marker;
 }
 
@@ -103,15 +100,19 @@ function _connectGoogleApi() {
 }
 
 function getCordsFromSearch(value) {
-    const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`;
+    const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`
     console.log(value);
     const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${apiKey}`;
+
     const prm = fetch(geolocationAPi)
-        .then((res) => res.json())
+        .then ((res) => res.json())
         .then((res) => {
             console.log(res);
-            let { lat, lng } = res.results[0].geometry.location;
-            console.log(lat, lng);
-            getToNewPos(value, lat, lng);
         });
+}
+
+function setMapOnAll(map) {
+  for (let i = 0; i < gMarkers.length; i++) {
+    gMarkers[i].setMap(map);
+  }
 }

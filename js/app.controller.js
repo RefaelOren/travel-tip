@@ -71,6 +71,7 @@ function onSearch(ev) {
 }
 
 function onSaveLocation() {
-    const cords = getLoc();
+    const cords = mapService.getLoc();
+    locService.addLoc(cords)
     console.log(cords);
 }

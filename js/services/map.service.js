@@ -9,6 +9,8 @@ export const mapService = {
 var gMap;
 let infoWindow
 
+
+
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
     return _connectGoogleApi().then(() => {
@@ -17,7 +19,8 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             center: { lat, lng },
             zoom: 15,
         });
-
+        let markers = google.maps.Marker
+        console.log(markers);
         // Create the initial InfoWindow.
         infoWindow = new google.maps.InfoWindow({
             content: "Click the map to get Lat/Lng!",
@@ -56,9 +59,12 @@ function getToNewPos(strLatlng, lat, lng) {
     infoWindow.setContent(strLatlng);//stringified
 
     panTo(lat, lng)//parsed
-    addMarker(({ lat, lng }))
+    const marker = addMarker(({ lat, lng }))
 
-    infoWindow.open(gMap);
+    infoWindow.open({
+        anchor: marker,
+        gMap
+    });
 }
 
 

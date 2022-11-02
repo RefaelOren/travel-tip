@@ -19,7 +19,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         });
 
         // Create the initial InfoWindow.
-        let infoWindow = new google.maps.InfoWindow({
+         infoWindow = new google.maps.InfoWindow({
             content: 'Click the map to get Lat/Lng!',
             position: { lat, lng },
         });
@@ -30,24 +30,24 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         gMap.addListener('click', (mapsMouseEvent) => {
             // Close the current InfoWindow.
             infoWindow.close();
-            let latlng = JSON.stringify(
+            let strLatlng = JSON.stringify(
                 mapsMouseEvent.latLng.toJSON(),
                 null,
                 2
             );
-            lat = JSON.parse(latlng).lat;
-            lng = JSON.parse(latlng).lng;
+            lat = JSON.parse(strLatlng).lat;
+            lng = JSON.parse(strLatlng).lng;
 
+            getToNewPos(strLatlng, lat, lng)
             //       // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({
-                position: mapsMouseEvent.latLng,
-            });
+            // infoWindow = new google.maps.InfoWindow({
+            //     position: mapsMouseEvent.latLng,
+            // });
 
             //   crating new info window
-            infoWindow.setContent(latlng); //stringified
-            mapService.panTo(latlng); //parsed
+            // infoWindow.setContent(strLatlng); //stringified
+            // mapService.panTo(latlng); //parsed
 
-            infoWindow.open(gMap);
         });
 
         console.log('Map!', gMap);
@@ -66,13 +66,10 @@ function getToNewPos(strLatlng, lat, lng) {
     panTo(lat, lng); //parsed
     const marker = addMarker({ lat, lng });
 
-    //   declare global {
-    //     interface Window {
-    //       initMap: () => void;
-    //     }
-    //   }
-    //   window.initMap = initMap;
-    //   export {};
+    infoWindow.open({
+        anchor: marker,
+        gMap});
+  
 }
 
 function addMarker(loc) {
@@ -106,12 +103,8 @@ function _connectGoogleApi() {
 function getCordsFromSearch(value) {
     const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`
     console.log(value);
-<<<<<<< HEAD
     const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${apiKey}`;
     const {lat, lng} = geolocationAPi
-=======
-    const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyASoKCVMWkWV58vT3P8o0q_Qj0iaxco1q4 `;
->>>>>>> 4bfd4a87bf12d1d9911de18eabdb06498f8d13fc
     const prm = fetch(geolocationAPi)
         .then((res) => res.json())
         .then((res) => {

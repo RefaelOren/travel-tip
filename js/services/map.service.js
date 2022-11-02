@@ -1,5 +1,4 @@
-import { storage } from './storage.service.js';
-import { locService } from './loc.service.js'
+import { locService } from './loc.service.js';
 
 export const mapService = {
     initMap,
@@ -13,7 +12,7 @@ export const mapService = {
 // Var that is used throughout this Module (not global)
 var gMap;
 var infoWindow;
-var gLoc={}
+var gLoc = {};
 var gMarkers = [];
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
@@ -70,8 +69,8 @@ function getToNewPos(strLatlng, lat, lng) {
         anchor: marker,
         gMap,
     });
-    gLoc.lat=lat
-    gLoc.lng=lng
+    gLoc.lat = lat;
+    gLoc.lng = lng;
 }
 
 function addMarker(loc) {
@@ -111,7 +110,6 @@ function getCordsFromSearch(value) {
     const prm = fetch(geolocationAPi)
         .then((res) => res.json())
         .then((res) => {
-
             console.log(res);
             let { lat, lng } = res.results[0].geometry.location;
             getToNewPos(value, lat, lng);
@@ -124,6 +122,6 @@ function setMapOnAll(map) {
     }
 }
 
-function getLoc(){
-    return gLoc
+function getLoc() {
+    return gLoc;
 }

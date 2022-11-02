@@ -18,6 +18,10 @@ function onInit() {
         .catch(() => console.log('Error: cannot init map'));
 }
 
+function renderLocs() {
+    get;
+}
+
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
     console.log('Getting Pos');
@@ -71,6 +75,6 @@ function onSearch(ev) {
 }
 
 function onSaveLocation() {
-    const cords = getLoc();
+    const cords = mapService.getLoc();
     console.log(cords);
 }

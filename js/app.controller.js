@@ -6,6 +6,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onSearch = onSearch;
 
 function onInit() {
     mapService
@@ -55,4 +56,10 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+function onSearch(ev) {
+    ev.preventDefault();
+    let keyword = document.querySelector('.search-input').value;
+    mapService.getCordsFromSearch(keyword);
 }

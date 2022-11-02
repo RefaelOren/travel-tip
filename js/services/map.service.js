@@ -2,6 +2,7 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
+    getCordsFromSearch,
 };
 
 // Var that is used throughout this Module (not global)
@@ -15,38 +16,39 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             center: { lat, lng },
             zoom: 15,
         });
-        
-    // Create the initial InfoWindow.
-    let infoWindow = new google.maps.InfoWindow({
-      content: "Click the map to get Lat/Lng!",
-      position: {lat, lng},
-    });
 
-    infoWindow.open(gMap)
+        // Create the initial InfoWindow.
+        let infoWindow = new google.maps.InfoWindow({
+            content: 'Click the map to get Lat/Lng!',
+            position: { lat, lng },
+        });
 
+        infoWindow.open(gMap);
 
-//     // Configure the click listener.
-    gMap.addListener("click", (mapsMouseEvent) => {
-      // Close the current InfoWindow.
-      infoWindow.close();
-  
-//       // Create a new InfoWindow.
-      infoWindow = new google.maps.InfoWindow({
-        position: mapsMouseEvent.latLng,
-      });
-  
-    //   crating new info window
-    let latlng = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-    infoWindow.setContent(latlng);//stringified
-    latlng = JSON.parse(latlng);
-    mapService.panTo(latlng)//parsed
-     
-      infoWindow.open(gMap);
-    });
+        //     // Configure the click listener.
+        gMap.addListener('click', (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
 
+            //       // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+
+            //   crating new info window
+            let latlng = JSON.stringify(
+                mapsMouseEvent.latLng.toJSON(),
+                null,
+                2
+            );
+            infoWindow.setContent(latlng); //stringified
+            latlng = JSON.parse(latlng);
+            mapService.panTo(latlng); //parsed
+
+            infoWindow.open(gMap);
+        });
 
         console.log('Map!', gMap);
-
     });
 }
 
@@ -59,7 +61,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 //   }
 //   window.initMap = initMap;
 //   export {};
-  
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({
@@ -87,4 +88,14 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load');
     });
+}
+
+function getCordsFromSearch(value) {
+    console.log(value);
+    const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}key=AIzaSyCak0tsf7tLmPKpIXUUzrTNxOdUIpSxa9M`;
+    const prm = fetch(geolocationAPi)
+        .then((res) => res.json())
+        .then((res) => {
+            console.log(res);
+        });
 }

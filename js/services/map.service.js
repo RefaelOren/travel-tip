@@ -38,8 +38,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
     //   crating new info window
     let latlng = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
     infoWindow.setContent(latlng);//stringified
-    latlng = JSON.parse(latlng);
-    mapService.panTo(latlng)//parsed
+    lat =  JSON.parse(latlng).lat
+    lng =  JSON.parse(latlng).lng
+    panTo(lat, lng)//parsed
      
       infoWindow.open(gMap);
     });

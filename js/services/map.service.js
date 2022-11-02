@@ -1,5 +1,4 @@
-import { storage } from './storage.service.js';
-import { locService } from './loc.service.js'
+import { locService } from './loc.service.js';
 
 export const mapService = {
     initMap,
@@ -13,8 +12,9 @@ export const mapService = {
 // Var that is used throughout this Module (not global)
 var gMap;
 var infoWindow;
-var gLoc={}
+var gLoc = { lat:32.0749831 , lng: 34.9120554};
 var gMarkers = [];
+
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
@@ -32,10 +32,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         });
 
         infoWindow.open(gMap);
-
-        //     // Configure the click listener.
         gMap.addListener('click', (mapsMouseEvent) => {
-            // Close the current InfoWindow.
             infoWindow.close();
             let strLatlng = JSON.stringify(
                 mapsMouseEvent.latLng.toJSON(),
@@ -45,33 +42,33 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             lat = JSON.parse(strLatlng).lat;
             lng = JSON.parse(strLatlng).lng;
 
-            getToNewPos(strLatlng, lat, lng);
+            getToNewPos(lat, lng);
         });
-
         console.log('Map!', gMap);
     });
 }
 
-function getToNewPos(strLatlng, lat, lng) {
+
+function getToNewPos(lat, lng, name) {
     infoWindow.close();
-
     setMapOnAll(null);
-
+    if (!name) name = `lat: ${lat}, lng: ${lng}`
     infoWindow = new google.maps.InfoWindow({
         position: { lat, lng },
     });
     //   crating new info window
-    infoWindow.setContent(strLatlng); //stringified
+    infoWindow.setContent(name); //stringified
 
     panTo(lat, lng); //parsed
     const marker = addMarker({ lat, lng });
-
+    console.log(lat, lng);
+    console.log('whre am i');
     infoWindow.open({
         anchor: marker,
         gMap,
-    });
-    gLoc.lat=lat
-    gLoc.lng=lng
+    })
+    gLoc.lat = lat;
+    gLoc.lng = lng;
 }
 
 function addMarker(loc) {
@@ -80,7 +77,7 @@ function addMarker(loc) {
         map: gMap,
         title: 'Hello World!',
     });
-    gMarkers.push(marker);
+    gMarkers.unshift(marker);
     return marker;
 }
 
@@ -107,14 +104,16 @@ function getCordsFromSearch(value) {
     const apiKey = `AIzaSyDHO4cXSBexlCdpJEEmvy9cNtB1kYivveI`;
     console.log(value);
     const geolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${apiKey}`;
-                            
+
     const prm = fetch(geolocationAPi)
         .then((res) => res.json())
         .then((res) => {
-
-            console.log(res);
+            // console.log(res);
+            const locName = res.results[0].formatted_address
             let { lat, lng } = res.results[0].geometry.location;
-            getToNewPos(value, lat, lng);
+            gLoc = { lat, lng }
+            getToNewPos(lat, lng, locName);
+
         });
 }
 
@@ -124,6 +123,12 @@ function setMapOnAll(map) {
     }
 }
 
-function getLoc(){
-    return gLoc
+function getLoc() {
+    console.log(gLoc);
+    return gLoc;
 }
+
+
+
+
+// wheather api: 7a815726955ba4c1594b3b9e2c25657c

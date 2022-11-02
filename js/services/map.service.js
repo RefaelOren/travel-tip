@@ -2,11 +2,13 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
-    getCordsFromSearch,
 };
 
 // Var that is used throughout this Module (not global)
 var gMap;
+let infoWindow
+
+
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
@@ -16,43 +18,51 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             center: { lat, lng },
             zoom: 15,
         });
+        
+    // Create the initial InfoWindow.
+    let infoWindow = new google.maps.InfoWindow({
+      content: "Click the map to get Lat/Lng!",
+      position: {lat, lng},
+    });
 
-        // Create the initial InfoWindow.
-        let infoWindow = new google.maps.InfoWindow({
-            content: 'Click the map to get Lat/Lng!',
-            position: { lat, lng },
-        });
+    infoWindow.open(gMap)
 
-        infoWindow.open(gMap);
 
-        //     // Configure the click listener.
-        gMap.addListener('click', (mapsMouseEvent) => {
-            // Close the current InfoWindow.
-            infoWindow.close();
-
-            //       // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({
-                position: mapsMouseEvent.latLng,
-            });
-
-            //   crating new info window
-            let latlng = JSON.stringify(
-                mapsMouseEvent.latLng.toJSON(),
-                null,
-                2
-            );
-            infoWindow.setContent(latlng); //stringified
-            latlng = JSON.parse(latlng);
-            mapService.panTo(latlng); //parsed
-
-            infoWindow.open(gMap);
-        });
+//     // Configure the click listener.
+    gMap.addListener("click", (mapsMouseEvent) => {
+      // Close the current InfoWindow.
+      infoWindow.close();
+  
+//       // Create a new InfoWindow.
+      infoWindow = new google.maps.InfoWindow({
+        position: mapsMouseEvent.latLng,
+      });
+  
+    //   crating new info window
+    let latlng = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+    infoWindow.setContent(latlng);//stringified
+    latlng = JSON.parse(latlng);
+    mapService.panTo(latlng)//parsed
+     
+      infoWindow.open(gMap);
+    });
 
         console.log('Map!', gMap);
     });
 }
 
-// remains from google maps api documentation for getting latlng from click
+function getToNewPos(strLatlng, lat, lng) {
+
+    infoWindow.close();
+    //       // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+        position: { lat, lng }
+    });
+    //   crating new info window
+    infoWindow.setContent(strLatlng);//stringified
+
+    panTo(lat, lng)//parsed
+    const marker = addMarker(({ lat, lng }))
 
 //   declare global {
 //     interface Window {
@@ -61,6 +71,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 //   }
 //   window.initMap = initMap;
 //   export {};
+  
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({

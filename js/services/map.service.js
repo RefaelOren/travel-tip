@@ -8,6 +8,7 @@ export const mapService = {
 // Var that is used throughout this Module (not global)
 var gMap;
 let infoWindow;
+var markersArray = [];
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');

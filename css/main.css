@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: dancing;
+    src: url('../fonts/DancingScript-VariableFont_wght.ttf');
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -19,6 +24,11 @@ header {
 
 h1 {
     align-self: flex-start;
+}
+
+span {
+    font-family: dancing;
+    float: inline-end;
 }
 
 .loc-wrapper {
@@ -70,4 +80,5 @@ form button {
 #map {
     margin: 20px auto;
     border: 2px solid lightgray;
+    border-radius: 5px;
 }

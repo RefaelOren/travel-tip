@@ -1,3 +1,5 @@
+import { storage } from './storage.service.js';
+
 export const mapService = {
     initMap,
     addMarker,

@@ -25,9 +25,7 @@ function addLoc({lat, lng}){
     const locPrm = fetch(revGeolocationAPi)
     .then(res=>res.json())
     .then(res=>{
-        // console.log(res);
         const name = res.results[1].formatted_address
-        console.log(name);
         const newId = locs.length+1
         const loc = {id:newId, name, lat, lng, createdAt:Date.now()}
         locs.unshift(loc)

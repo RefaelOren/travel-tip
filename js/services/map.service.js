@@ -1,6 +1,6 @@
 export const mapService = {
     initMap,
-    addMarker,
+    addMarker,//refael the first to his name!!
     panTo,
 };
 

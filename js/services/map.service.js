@@ -11,7 +11,8 @@ export const mapService = {
 
 // Var that is used throughout this Module (not global)
 var gMap;
-let infoWindow;
+var infoWindow;
+var gLoc
 var gMarkers = [];
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {

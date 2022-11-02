@@ -19,16 +19,13 @@ button {
 
 header {
     padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
     height: fit-content;
 }
 
-h1 {
-    align-self: flex-start;
-}
-
-span {
+.nice-text {
     font-family: dancing;
-    float: inline-end;
 }
 
 .loc-wrapper {

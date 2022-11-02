@@ -1,4 +1,5 @@
 import { storage } from './storage.service.js';
+import { locService } from './loc.service.js'
 
 export const mapService = {
     initMap,
@@ -67,7 +68,7 @@ function getToNewPos(strLatlng, lat, lng) {
         anchor: marker,
         gMap,
     });
-    locService.addLoc('aa')
+    locService.addLoc(lat, lng)
 }
 
 function addMarker(loc) {

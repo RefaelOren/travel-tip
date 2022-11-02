@@ -17,8 +17,8 @@ function getLocs() {
     })
 }
 
-function addLoc(a){
-console.log(a);
+function addLoc(lat, lng){
+console.log(lat, lng);
 }
 
 

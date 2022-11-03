@@ -11,10 +11,27 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
 }
 
 button {
     cursor: pointer;
+}
+
+.user-msg {
+    width: 150px;
+    height: 0;
+    background-color: black;
+    position: fixed;
+    z-index: 5;
+    color: white;
+    display: grid;
+    place-content: center;
+    transition: 0.5s;
+}
+
+.show-msg {
+    height: 50px;
 }
 
 header {

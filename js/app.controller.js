@@ -10,6 +10,7 @@ window.onSearch = onSearch;
 window.onSaveLocation = onSaveLocation;
 window.onGo = onGo;
 window.onDeleteLoc = onDeleteLoc;
+window.showUserMsg = showUserMsg;
 
 function onInit() {
     mapService
@@ -88,6 +89,7 @@ function onSaveLocation() {
     console.log(locs);
     locService.addLoc(cords, desc);
     renderLocs(locs);
+    showUserMsg('location saved');
 }
 
 function renderLocs(locs) {
@@ -118,4 +120,14 @@ function onDeleteLoc(id) {
     locService.deleteLoc(id);
     const locs = locService.getLocs();
     renderLocs(locs);
+    showUserMsg('location deleted');
+}
+
+function showUserMsg(msg) {
+    let elMsg = document.querySelector('.user-msg');
+    elMsg.innerText = msg;
+    elMsg.classList.add('show-msg');
+    setTimeout(() => {
+        elMsg.classList.remove('show-msg');
+    }, 1000);
 }

@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelTip</title>
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body> 
-    <header>
-        <h1 class="logo">Travel tip</h1>
-        <h1 class="nice-text"> Pick your favorite places</h1>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TravelTip</title>
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body>
+        <header>
+            <h1 class="logo">Travel tip</h1>
+            <h1 class="nice-text">Pick your favorite places</h1>
+        </header>
         <div class="loc-wrapper">
             <form onsubmit="onSearch(event)">
-                <input class="search-input" type="search" placeholder="Enter Location" />
+                <input
+                    class="search-input"
+                    type="search"
+                    placeholder="Enter Location"
+                />
                 <button>GO</button>
             </form>
-            <button onclick="onGetUserPos()" class="btn-user-pos">My  Location</button>
+            <button onclick="onGetUserPos()" class="btn-user-pos">
+                My Location
+            </button>
         </div>
-    <div id="map" style="width: 92%; height: 400px;"></div>
-    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker</button>
-    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-    <button onclick="onPanTo()"class="btn-pan">Pan Map to Tokyo</button>
-    <button onclick="onSaveLocation()"class="btn-add">save location</button>
+        <button onclick="onSaveLocation()" class="btn-add">
+            Save Location
+        </button>
+        <main>
+            <div class="map-container">
+                <div id="map" style="width: 92%; height: 400px"></div>
+            </div>
 
-    <p>You are at: <span class="user-pos"></span></p>
-    <p>Locations: 
-        <pre class="locs"></pre>
-    </p>
-    <!-- id, name, lat, lng, weather, createdAt, updatedAt -->
-<!-- <article class="loc-card"><p>name</p><p>weather</p><p>createdAt</p>
-<button class="btn goBtn" onclick="getToNewPos()"></button>
-<button class="btn deleteBtn" onclick="deleteLoc(id)" ></button></article> -->
-    <script type="module" src="js/app.controller.js"></script>
-</body>
+            <div class="locs-container"></div>
+        </main>
+        <script type="module" src="js/app.controller.js"></script>
+
+        <!-- <button onclick="onAddMarker()" class="btn-add-marker">
+            Add Marker
+        </button>
+        <button onclick="onGetLocs()" class="btn-get-locs">
+            Get Locations
+        </button>
+        <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button> -->
+    </body>
 </html>

@@ -53,7 +53,7 @@ function onGetUserPos() {
             const lng = pos.coords.longitude;
             locService.getLocDesc({ lat, lng }).then((posDesc) => {
                 console.log(posDesc);
-                document.querySelector('.user-pos').innerText = posDesc;
+                // document.querySelector('.user-pos').innerText = posDesc;
                 // mapService.panTo(pos.coords.latitude,pos.coords.longityzude)
                 mapService.getToNewPos(
                     pos.coords.latitude,
@@ -82,6 +82,7 @@ function onSaveLocation() {
     console.log(cords);
     const desc = locService.getLocDesc(cords).then((res) => {
         console.log(res);
+        return res;
     });
     const locs = locService.getLocs();
     console.log(locs);
@@ -92,16 +93,16 @@ function onSaveLocation() {
 function renderLocs(locs) {
     if (!locs) locs = locService.getLocs();
     console.log(locs);
-    const elLocsContainer = document.querySelector('.locs');
+    const elLocsContainer = document.querySelector('.locs-container');
     const strHTML = locs
         .map(
             ({ name, id, createdAt, lat, lng }) =>
                 `<article class="loc-card">
-                    <p>${name}</p>
-                    <p>weather</p>
-                    <p>created at: ${createdAt}</p>
-                    <button class="btn goBtn" onclick="onGo('${lat}', '${lng}', '${name}')">go</button>
-                    <button class="btn deleteBtn" onclick="onDeleteLoc(${id})" >delete</button>
+                    <p class="card-name">${name}</p>
+                    <p class="card-weather">weather</p>
+                    <p class="cart-date">${createdAt}</p>
+                    <button class="btn go-btn" onclick="onGo('${lat}', '${lng}', '${name}')">Go</button>
+                    <button class="btn delete-btn" onclick="onDeleteLoc(${id})" >Delete</button>
                  </article>
                 `
         )

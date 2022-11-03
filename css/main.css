@@ -159,6 +159,8 @@ form button {
     color: white;
     border-radius: 5px;
     /* font-size: 0.8rem; */
+    width: fit-content;
+    height: fit-content;
 }
 
 .go-btn {
@@ -167,6 +169,12 @@ form button {
 
 .delete-btn {
     background-color: rgb(230, 113, 113);
+    /* width: fit-content; */
+}
+
+.btn i {
+    padding: 0.5rem 0.8rem;
+    font-size: 1.2rem;
 }
 
 @media (min-width: 900px) {

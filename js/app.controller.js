@@ -103,8 +103,8 @@ function renderLocs(locs) {
                     <p class="card-name">${name}</p>
                     <p class="card-weather">weather</p>
                     <p class="cart-date">${createdAt}</p>
-                    <button class="btn go-btn" onclick="onGo('${lat}', '${lng}', '${name}')">Go</button>
-                    <button class="btn delete-btn" onclick="onDeleteLoc(${id})" >Delete</button>
+                    <button class="btn go-btn" onclick="onGo('${lat}', '${lng}', '${name}')"><i class="fa-solid fa-location-arrow"></i></button>
+                    <button class="btn delete-btn" onclick="onDeleteLoc(${id})" ><i class="fa-solid fa-trash"></i></button>
                  </article>
                 `
         )

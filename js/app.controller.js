@@ -8,7 +8,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onSearch = onSearch;
 window.onSaveLocation = onSaveLocation;
-window.onGo  = onGo ;
+window.onGo = onGo;
 window.onDeleteLoc = onDeleteLoc;
 
 function onInit() {
@@ -18,7 +18,7 @@ function onInit() {
             console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
-    renderLocs()
+    renderLocs();
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -49,18 +49,18 @@ function onGetUserPos() {
     getPosition()
         .then((pos) => {
             console.log('User position is:', pos.coords);
-            const lat  = pos.coords.latitude
-            const lng  = pos.coords.longitude
-             locService.getLocDesc({lat,lng}).then(posDesc=>{
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            locService.getLocDesc({ lat, lng }).then((posDesc) => {
                 console.log(posDesc);
-                 document.querySelector('.user-pos').innerText = posDesc;
-                 // mapService.panTo(pos.coords.latitude,pos.coords.longityzude)
-                 mapService.getToNewPos(
-                     pos.coords.latitude,
-                     pos.coords.longitude,
-                     posDesc,
-                 );
-             })//`Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
+                document.querySelector('.user-pos').innerText = posDesc;
+                // mapService.panTo(pos.coords.latitude,pos.coords.longityzude)
+                mapService.getToNewPos(
+                    pos.coords.latitude,
+                    pos.coords.longitude,
+                    posDesc
+                );
+            }); //`Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
         })
         .catch((err) => {
             console.log('err!!!', err);
@@ -80,38 +80,41 @@ function onSearch(ev) {
 function onSaveLocation() {
     const cords = mapService.getLoc();
     console.log(cords);
-    const desc = locService.getLocDesc(cords).then(res=>{
+    const desc = locService.getLocDesc(cords).then((res) => {
         console.log(res);
     });
-    const locs = locService.getLocs()
+    const locs = locService.getLocs();
     console.log(locs);
-    locService.addLoc(cords,desc )
-    renderLocs(locs)
+    locService.addLoc(cords, desc);
+    renderLocs(locs);
 }
 
 function renderLocs(locs) {
-    if (!locs) locs = locService.getLocs()
+    if (!locs) locs = locService.getLocs();
     console.log(locs);
-    const elLocsContainer = document.querySelector('.locs')
-    const strHTML = locs.map(({ name, id, createdAt, lat, lng }) => `<article class="loc-card">
-    <p>${name}</p>
-    <p>weather</p>
-    <p>created at: ${createdAt}</p>
-    <button class="btn goBtn" onclick="onGo('${lat}', '${lng}', '${name}')">go</button>
-    <button class="btn deleteBtn" onclick="onDeleteLoc(${id})" >delete</button></article>`
-    ).join('')
-    elLocsContainer.innerHTML = strHTML
+    const elLocsContainer = document.querySelector('.locs');
+    const strHTML = locs
+        .map(
+            ({ name, id, createdAt, lat, lng }) =>
+                `<article class="loc-card">
+                    <p>${name}</p>
+                    <p>weather</p>
+                    <p>created at: ${createdAt}</p>
+                    <button class="btn goBtn" onclick="onGo('${lat}', '${lng}', '${name}')">go</button>
+                    <button class="btn deleteBtn" onclick="onDeleteLoc(${id})" >delete</button>
+                 </article>
+                `
+        )
+        .join('');
+    elLocsContainer.innerHTML = strHTML;
 }
 
-function onGo(lat, lng, name){
-    mapService.getToNewPos(+lat, +lng, name)
+function onGo(lat, lng, name) {
+    mapService.getToNewPos(+lat, +lng, name);
 }
 function onDeleteLoc(id) {
     console.log(id);
-    locService.deleteLoc(id)
-    const locs = locService.getLocs()
-    renderLocs(locs)
+    locService.deleteLoc(id);
+    const locs = locService.getLocs();
+    renderLocs(locs);
 }
-
-
-

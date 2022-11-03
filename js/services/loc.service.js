@@ -34,7 +34,7 @@ function getLocs() {
     return locs;
 }
 
-function getLocDesc({ lat, lng }) {
+ function getLocDesc({ lat, lng }) {
     const revGeolocationAPi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
     return fetch(revGeolocationAPi)
         .then((res) => res.json())

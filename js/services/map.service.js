@@ -52,12 +52,17 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 function getToNewPos(lat, lng, name) {
     infoWindow.close();
     setMapOnAll(null);
-    if (!name) name = `lat: ${lat}, lng: ${lng}`
+    if (!name){ locService.getLocDesc(({lat, lng})).then(desc=>{
+        
+        console.log(desc);
+        infoWindow.setContent(desc); //stringified
+    })} else infoWindow.setContent(name)
+        
+
     infoWindow = new google.maps.InfoWindow({
         position: { lat, lng },
     });
     //   crating new info window
-    infoWindow.setContent(name); //stringified
 
     panTo(lat, lng); //parsed
     const marker = addMarker({ lat, lng });
